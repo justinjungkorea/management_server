@@ -33,6 +33,15 @@ app.get('/api/customers', (req,res)=>{
     })
 });
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
+
 app.use('/image', express.static('./upload'));
 app.post('/api/customers', upload.single('image'), (req, res) => {
     let sql = 'Insert into customer values (null, ?, ?, ?, ?, now(), 0)';
@@ -55,6 +64,6 @@ app.delete('/api/customers/:id', (req,res)=>{
 })
 
 app.get('/', (req, res) => {
-    res.redirect('http://localhost:3000');
+    res.redirect("http://justinjungkorea.github.io/management_client/");
 });
 app.listen(PORT,()=>console.log(`✅Listening on port ${PORT}`));
